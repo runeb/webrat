@@ -38,8 +38,17 @@ describe "select" do
 
     lambda { select "February", :from => "year" }.should raise_error(Webrat::NotFoundError)
   end
+  
+  it 'should do case-insensitive option value lookup of strings' do
+    with_html <<-HTML
+      <html>
+        <select name="month"><option value="1">january</option></select>
+      </html>
+    HTML
 
-
+    lambda { select "January", :from => "month" }.should_not raise_error(Webrat::NotFoundError)
+  end
+  
   it "should fail if the select is disabled" do
     with_html <<-HTML
       <html>

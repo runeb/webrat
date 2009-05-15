@@ -20,6 +20,8 @@ module Webrat
           field.options.detect do |o|
             if @option_text.is_a?(Regexp)
               Webrat::XML.inner_html(o.element) =~ @option_text
+            elsif @option_text.is_a?(String)
+              Webrat::XML.inner_html(o.element).casecmp(@option_text) == 0
             else
               Webrat::XML.inner_html(o.element) == @option_text.to_s
             end
